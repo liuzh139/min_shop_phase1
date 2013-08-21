@@ -30,7 +30,7 @@ public class DaoTest {
    @Before
    public void setUp() {
       muffin = new Product(muffinId, "Muffin", "Cupcake", "Snack", 4, 10);
-      juice = new Product(juiceId, "Jill", "Orange juice", "Soft Drink", 4, 20);
+      juice = new Product(juiceId, "Jill", "Orange juice", "SoftDrink", 4, 20);
       dao.save(muffin);
       dao.save(juice);
    }
@@ -107,9 +107,26 @@ public class DaoTest {
 // ensure that the result is null
       assertNull("This one should not exist.", nonExist);
    }
-   // TODO add test methods here.
-   // The methods must be annotated with annotation @Test. For example:
-   //
-   // @Test
-   // public void hello() {}
+
+   @Test
+   public void testDaoGetMajors() {
+
+      Collection<String> categories = dao.getCategory();
+
+      assertTrue("Snack should exist in the result", categories.contains(muffin.getCategory()));
+      assertTrue("SoftDrink should exist in the result", categories.contains(juice.getCategory()));
+   }
+
+   @Test
+   public void testEdit() {
+
+      muffin.setName("Cupcake");
+      dao.save(muffin);
+      Product retrieved = dao.getById(muffinId);
+
+      assertEquals("Retrieved product should be the same as the saved one",
+              "Cupcake", retrieved.getName());
+
+   }
+  
 }
