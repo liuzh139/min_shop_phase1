@@ -4,18 +4,36 @@
  */
 package gui;
 
+import dao.ProductDAO;
+import domain.Product;
+import gui.helpers.SimpleListModel;
+import java.util.Collection;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author liuzh139
  */
 public class ProductReportDialog extends javax.swing.JDialog {
 
+   private ProductDAO dao;
+   private SimpleListModel productsModel;
+   private SimpleListModel categoryModel;
+
    /**
     * Creates new form ProductReportDialog
     */
-   public ProductReportDialog(java.awt.Frame parent, boolean modal) {
+   public ProductReportDialog(java.awt.Frame parent, boolean modal, ProductDAO dao) {
       super(parent, modal);
       initComponents();
+
+      this.dao = dao;
+
+      productsModel = new SimpleListModel(dao.getAll());
+      categoryModel = new SimpleListModel(dao.getCategory());
+
+      lstProducts.setModel(productsModel);
+      cmbCategory.setModel(categoryModel);
    }
 
    /**
@@ -30,13 +48,14 @@ public class ProductReportDialog extends javax.swing.JDialog {
       jLabel1 = new javax.swing.JLabel();
       jLabel2 = new javax.swing.JLabel();
       jLabel3 = new javax.swing.JLabel();
-      scrollPane1 = new java.awt.ScrollPane();
       btnEdit = new javax.swing.JButton();
       btnDelete = new javax.swing.JButton();
       btnClose = new javax.swing.JButton();
       btnSearch = new javax.swing.JButton();
       cmbCategory = new javax.swing.JComboBox();
       txtId = new javax.swing.JTextField();
+      jScrollPane1 = new javax.swing.JScrollPane();
+      lstProducts = new javax.swing.JList();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -50,25 +69,57 @@ public class ProductReportDialog extends javax.swing.JDialog {
       jLabel3.setText("Category Filter:");
       jLabel3.setName("jLabel3"); // NOI18N
 
-      scrollPane1.setName("scrollPane1"); // NOI18N
-
       btnEdit.setText("Edit");
       btnEdit.setName("btnEdit"); // NOI18N
+      btnEdit.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnEditActionPerformed(evt);
+         }
+      });
 
       btnDelete.setText("Delete");
       btnDelete.setName("btnDelete"); // NOI18N
+      btnDelete.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnDeleteActionPerformed(evt);
+         }
+      });
 
       btnClose.setText("Close");
       btnClose.setName("btnClose"); // NOI18N
+      btnClose.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnCloseActionPerformed(evt);
+         }
+      });
 
       btnSearch.setText("Search");
       btnSearch.setName("btnSearch"); // NOI18N
+      btnSearch.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSearchActionPerformed(evt);
+         }
+      });
 
       cmbCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
       cmbCategory.setName("cmbCategory"); // NOI18N
+      cmbCategory.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            cmbCategoryActionPerformed(evt);
+         }
+      });
 
-      txtId.setText("   ");
       txtId.setName("txtId"); // NOI18N
+
+      jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+      lstProducts.setModel(new javax.swing.AbstractListModel() {
+         String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+         public int getSize() { return strings.length; }
+         public Object getElementAt(int i) { return strings[i]; }
+      });
+      lstProducts.setName("lstProducts"); // NOI18N
+      jScrollPane1.setViewportView(lstProducts);
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
       getContentPane().setLayout(layout);
@@ -82,9 +133,6 @@ public class ProductReportDialog extends javax.swing.JDialog {
                      .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSearch))
-                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE))
                      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -106,11 +154,15 @@ public class ProductReportDialog extends javax.swing.JDialog {
                         .addGap(75, 75, 75))
                      .addGroup(layout.createSequentialGroup()
                         .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(0, 1, Short.MAX_VALUE))))
+               .addGroup(layout.createSequentialGroup()
+                  .addGap(149, 149, 149)
+                  .addComponent(jLabel1)
+                  .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
          .addGroup(layout.createSequentialGroup()
-            .addGap(149, 149, 149)
-            .addComponent(jLabel1)
+            .addContainerGap()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
       layout.setVerticalGroup(
@@ -126,9 +178,9 @@ public class ProductReportDialog extends javax.swing.JDialog {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(jLabel3)
                .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(btnEdit)
                .addComponent(btnDelete)
@@ -139,47 +191,56 @@ public class ProductReportDialog extends javax.swing.JDialog {
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
-   /**
-    * @param args the command line arguments
-    */
-   public static void main(String args[]) {
-      /* Set the Nimbus look and feel */
-      //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-       * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-       */
-      try {
-         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-               javax.swing.UIManager.setLookAndFeel(info.getClassName());
-               break;
-            }
-         }
-      } catch (ClassNotFoundException ex) {
-         java.util.logging.Logger.getLogger(ProductReportDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-      } catch (InstantiationException ex) {
-         java.util.logging.Logger.getLogger(ProductReportDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-      } catch (IllegalAccessException ex) {
-         java.util.logging.Logger.getLogger(ProductReportDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-      } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-         java.util.logging.Logger.getLogger(ProductReportDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-      }
-      //</editor-fold>
+   private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+      if (!lstProducts.isSelectionEmpty()) {
+         Product product = (Product) lstProducts.getSelectedValue(); //there is no such a method in SimpleListModel.java
+         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the product " + product.toString()); //nest the ID and Name in it?
+         if (result == JOptionPane.YES_OPTION) {
 
-      /* Create and display the dialog */
-      java.awt.EventQueue.invokeLater(new Runnable() {
-         public void run() {
-            ProductReportDialog dialog = new ProductReportDialog(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-               @Override
-               public void windowClosing(java.awt.event.WindowEvent e) {
-                  System.exit(0);
-               }
-            });
-            dialog.setVisible(true);
+            dao.delete(product);
+            productsModel.updateItems(dao.getAll());
          }
-      });
-   }
+         lstProducts.clearSelection();
+      }
+   }//GEN-LAST:event_btnDeleteActionPerformed
+
+   private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+      this.dispose();
+   }//GEN-LAST:event_btnCloseActionPerformed
+
+   private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+      if (!lstProducts.isSelectionEmpty()) {
+         Product product = (Product) lstProducts.getSelectedValue();
+
+         ProductDialog frame = new ProductDialog(this, true, product, dao);
+         frame.setLocationRelativeTo(this);
+         frame.setVisible(true);
+
+         productsModel.updateItems(dao.getAll());
+         lstProducts.clearSelection();
+      }
+   }//GEN-LAST:event_btnEditActionPerformed
+
+   private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+      Integer productId = Integer.parseInt(txtId.getText());
+      Product product = dao.getById(productId);
+
+      productsModel.updateItems(product);
+   }//GEN-LAST:event_btnSearchActionPerformed
+
+   private void cmbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoryActionPerformed
+      Collection <Product> products;
+      
+      if (cmbCategory.getSelectedIndex() == -1) {
+         products = dao.getAll();
+      } else {
+         //get the selected category
+         String st = cmbCategory.getSelectedItem().toString();
+         products = dao.getByCategory(st);
+      }
+      productsModel.updateItems(products);
+
+   }//GEN-LAST:event_cmbCategoryActionPerformed
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton btnClose;
    private javax.swing.JButton btnDelete;
@@ -189,7 +250,8 @@ public class ProductReportDialog extends javax.swing.JDialog {
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
-   private java.awt.ScrollPane scrollPane1;
+   private javax.swing.JScrollPane jScrollPane1;
+   private javax.swing.JList lstProducts;
    private javax.swing.JTextField txtId;
    // End of variables declaration//GEN-END:variables
 }

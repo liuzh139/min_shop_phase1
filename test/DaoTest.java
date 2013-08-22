@@ -29,8 +29,8 @@ public class DaoTest {
 
    @Before
    public void setUp() {
-      muffin = new Product(muffinId, "Muffin", "Cupcake", "Snack", 4, 10);
-      juice = new Product(juiceId, "Jill", "Orange juice", "SoftDrink", 4, 20);
+      muffin = new Product(muffinId, "Muffin", "Cupcake", "Snack", 5.00, 10);
+      juice = new Product(juiceId, "Juice", "Orange juice", "SoftDrink", 4.00, 20);
       dao.save(muffin);
       dao.save(juice);
    }
@@ -43,39 +43,39 @@ public class DaoTest {
 
    @Test
    public void testDaoSaveAndDelete() {
-// create student for testing
-      Product candybar = new Product(33333, "CandyBar", "Strawberry flavour", "Snack", 2, 10);
-// save the student using DAO
+// create product for testing
+      Product candybar = new Product(33333, "CandyBar", "Strawberry", "Snack", 2.00, 10);
+// save the product using DAO
       dao.save(candybar);
-// retreive the same student via DAO
+// retreive the same product via DAO
       Product retrieved = dao.getById(33333);
-// ensure that the student we saved is the one we got back
+// ensure that the product we saved is the one we got back
       assertEquals("Retrieved product should be the same as the saved one",
               candybar, retrieved);
-// delete the student via the DAO
+// delete the product via the DAO
       dao.delete(candybar);
-// try to retrieve the deleted student
+// try to retrieve the deleted product
       retrieved = dao.getById(33333);
-// ensure that the student was not retrieved (should be null)
-      assertNull("Student should no longer exist", retrieved);
+// ensure that the product was not retrieved (should be null)
+      assertNull("Product should no longer exist", retrieved);
    }
 
    @Test
    public void testDaoGetAll() {
 // call getAll
       Collection<Product> products = dao.getAll();
-// ensure the result includes the test students
-      assertTrue("Jack should exist in the result", products.contains(muffin));
-      assertTrue("Jill should exist in the result", products.contains(juice));
-// find Jack .. result is not a map, so we have to sequentially search
+// ensure the result includes the test products
+      assertTrue("Muffin should exist in the result", products.contains(muffin));
+      assertTrue("CandyBar should exist in the result", products.contains(juice));
+// find muffin .. result is not a map, so we have to sequentially search
       for (Product s : products) {
          if (s.equals(muffin)) {
-// ensure that Jack’s details were correctly retrieved
+// ensure that muffin’s details were correctly retrieved
             assertEquals(muffin.getId(), s.getId());
             assertEquals(muffin.getName(), s.getName());
             assertEquals(muffin.getCategory(), s.getCategory());
             assertEquals(muffin.getDescription(), s.getDescription());
-            assertEquals(muffin.getPrice(), s.getPrice());
+            assertEquals(muffin.getPrice(), s.getPrice(), 0);
             assertEquals(muffin.getStock(), s.getStock());
 
          }
@@ -85,20 +85,20 @@ public class DaoTest {
    @Test
    public void testDaoGetById() {
       Collection<Product> products = dao.getAll();
-// get Jack using getById method
+// get muffin using getById method
       Product retrieved = dao.getById(muffinId);
-// ensure that we got back Jack and not another student
+// ensure that we got back Jack and not another product
       assertTrue("Muffin should exist in the result", products.contains(retrieved));
-// ensure that Jack’s details were properly retrieved (which
+// ensure that muffin’s details were properly retrieved (which
 // indirectly tests that the details were properly saved).
       for (Product s : products) {
          if (s.equals(retrieved)) {
-// ensure that Jack’s details were correctly retrieved
+// ensure that muffin’s details were correctly retrieved
             assertEquals(retrieved.getId(), s.getId());
             assertEquals(retrieved.getName(), s.getName());
             assertEquals(retrieved.getCategory(), s.getCategory());
             assertEquals(retrieved.getDescription(), s.getDescription());
-            assertEquals(retrieved.getPrice(), s.getPrice());
+            assertEquals(muffin.getPrice(), s.getPrice(), 0);
             assertEquals(retrieved.getStock(), s.getStock());
          }
       }

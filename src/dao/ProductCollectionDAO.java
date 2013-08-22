@@ -15,13 +15,13 @@ import java.util.TreeMap;
  * @author liuzh139
  */
 public class ProductCollectionDAO implements ProductDAO {
-   
+
    private static Map<Integer, Product> products = new TreeMap<>();
    private static Collection<String> categories = new ArrayList<>();
 
    @Override
    public void save(Product product) {
-      products.put(product.getId(),product);
+      products.put(product.getId(), product);
       categories.add(product.getCategory());
    }
 
@@ -32,7 +32,7 @@ public class ProductCollectionDAO implements ProductDAO {
 
    @Override
    public Product getById(Integer ProductId) {
-     return products.get(ProductId);
+      return products.get(ProductId);
    }
 
    @Override
@@ -44,5 +44,15 @@ public class ProductCollectionDAO implements ProductDAO {
    public Collection<Product> getAll() {
       return products.values();
    }
-   
+
+   @Override
+   public Collection<Product> getByCategory(String category) {
+      Collection<Product> getByCategory = new ArrayList();
+      for (Product product : products.values()) {
+         if (product.getCategory().equals(category)) {
+            getByCategory.add(product);
+         }
+      }
+      return getByCategory;
+   }
 }
