@@ -7,7 +7,7 @@ import java.awt.EventQueue;
 
 public class Main {
 
-   static ProductDAO dao = new ProductCollectionDAO();
+   static ProductDAO dao = new ProductJdbcDAO();
 
 	/**
     *
