@@ -182,7 +182,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtId">
       <Properties>
-        <Property name="name" type="java.lang.String" value="txtId" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="txtSearch" noResource="true"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">

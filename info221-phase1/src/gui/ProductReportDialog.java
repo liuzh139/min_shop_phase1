@@ -109,7 +109,7 @@ public class ProductReportDialog extends javax.swing.JDialog {
          }
       });
 
-      txtId.setName("txtId"); // NOI18N
+      txtId.setName("txtSearch"); // NOI18N
 
       jScrollPane1.setName("jScrollPane1"); // NOI18N
 

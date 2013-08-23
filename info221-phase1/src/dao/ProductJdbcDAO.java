@@ -139,7 +139,7 @@ public class ProductJdbcDAO implements ProductDAO {
             String name = rs.getString("name");
             String description = rs.getString("description");
             String category = rs.getString("category");
-            int price = rs.getInt("price");
+            double price = rs.getDouble("price");
             int stock = rs.getInt("stock");
 // use the data to create a student object
             Product p = new Product(id, name, description, category, price, stock);

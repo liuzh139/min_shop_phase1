@@ -7,6 +7,7 @@ import dao.ProductDAO;
 import domain.Product;
 import gui.ProductReportDialog;
 import gui.helpers.SimpleListModel;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 import static org.fest.swing.core.matcher.DialogMatcher.withTitle;
@@ -45,7 +46,14 @@ public class ProductReportDialogTest {
       products = new TreeSet<>();
       products.add(muffin);
       products.add(juice);
+      
+      getByCategory = new TreeSet<>();
       getByCategory.add(muffin);
+      
+      Collection<String> cats = new TreeSet<>();
+      cats.add("Snack");
+      cats.add("SoftDrink");
+      
 // create a mock for the DAO
       dao = mock(ProductDAO.class);
 // stub the getAll method to return the test students collection
@@ -54,6 +62,9 @@ public class ProductReportDialogTest {
       when(dao.getById(11111)).thenReturn(muffin);
       when(dao.getById(22222)).thenReturn(juice);
       when(dao.getByCategory(muffin.getCategory())).thenReturn(getByCategory);
+      when(dao.getCategory()).thenReturn(cats);
+      
+      
 // create dialog passing mocked DAO
       dialog = new ProductReportDialog(null, true, dao);
    }
@@ -61,7 +72,10 @@ public class ProductReportDialogTest {
    @After
    public void tearDown() {
       //clean up FEST so that it is ready for the next test
-      fest.cleanUp();
+      
+      if(fest != null) {
+         fest.cleanUp();
+      }
    }
 
    @Test

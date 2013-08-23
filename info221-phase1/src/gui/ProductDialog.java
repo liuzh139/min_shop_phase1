@@ -123,6 +123,7 @@ public class ProductDialog extends javax.swing.JDialog {
       txtStock = new javax.swing.JFormattedTextField();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+      setName("productDialog"); // NOI18N
 
       jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
       jLabel1.setText("Product Editor");

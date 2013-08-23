@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Range;
  *
  * @author liuzh139
  */
-public class Product {
+public class Product implements Comparable<Product> {
 
    @NotNull(message = "ID must be provided.")
    @Range(min = 1, max = 9999999, message = "ID must contain between 1 and 7 digits (inclusive).")
@@ -32,16 +32,16 @@ public class Product {
  
    @NotNull(message = "Price must be provided.")
    @Range(min = 1, max = 99999, message = "Price must contain between 1 and 5 digits (inclusive).")
-   private double price;
+   private Double price;
    
    @NotNull(message = "Stock must be provided.")
    @Range(min = 0, max = 99999, message = "Stock must contain between 1 and 5 digits (inclusive).")
-   private int stock;
+   private Integer stock;
 
    public Product() {
    }
 
-   public Product(Integer id, String name, String description, String category, double price, int stock) {
+   public Product(Integer id, String name, String description, String category, Double price, Integer stock) {
       this.id = id;
       this.name = name;
       this.description = description;
@@ -54,50 +54,51 @@ public class Product {
       return id;
    }
 
-   public String getName() {
-      return name;
-   }
-
-   public String getDescription() {
-      return description;
-   }
-
-   public String getCategory() {
-      return category;
-   }
-
-   public double getPrice() {
-      return price;
-   }
-
-   public int getStock() {
-      return stock;
-   }
-
    public void setId(Integer id) {
       this.id = id;
+   }
+
+   public String getName() {
+      return name;
    }
 
    public void setName(String name) {
       this.name = name;
    }
 
-   public void setDescription(String description) {
-      this.description = description;
+   public String getCategory() {
+      return category;
    }
 
    public void setCategory(String category) {
       this.category = category;
    }
 
-   public void setPrice(double price) {
+   public String getDescription() {
+      return description;
+   }
+
+   public void setDescription(String description) {
+      this.description = description;
+   }
+
+   public Double getPrice() {
+      return price;
+   }
+
+   public void setPrice(Double price) {
       this.price = price;
    }
 
-   public void setStock(int stock) {
+   public Integer getStock() {
+      return stock;
+   }
+
+   public void setStock(Integer stock) {
       this.stock = stock;
    }
 
+   
    @Override
    public int hashCode() {
       int hash = 7;
@@ -123,5 +124,10 @@ public class Product {
    @Override
    public String toString() {
       return "ID: " + id + ", Name: " + name;
+   }
+
+   @Override
+   public int compareTo(Product o) {
+      return this.id.compareTo(o.id);
    }
 }
