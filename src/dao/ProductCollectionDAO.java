@@ -28,6 +28,7 @@ public class ProductCollectionDAO implements ProductDAO {
    @Override
    public void delete(Product product) {
       products.remove(product.getId());
+      categories.remove(product.getCategory());
    }
 
    @Override
