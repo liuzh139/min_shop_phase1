@@ -1,5 +1,4 @@
 
-import dao.ProductCollectionDAO;
 import dao.ProductDAO;
 import dao.ProductJdbcDAO;
 import gui.MainMenu;
@@ -7,7 +6,7 @@ import java.awt.EventQueue;
 
 public class Main {
 
-   static ProductDAO dao = new ProductCollectionDAO();
+   static ProductDAO dao = new ProductJdbcDAO();
 
 	/**
     *

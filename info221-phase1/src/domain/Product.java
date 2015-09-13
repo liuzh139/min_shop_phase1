@@ -19,29 +19,29 @@ public class Product implements Comparable<Product> {
    @NotNull(message = "ID must be provided.")
    @Range(min = 1, max = 9999999, message = "ID must contain between 1 and 7 digits (inclusive).")
    private Integer id;
-  
+   
    @NotBlank(message = "Name must be provided.")
    @Length(min = 2, message = "Name must contain at least two characters.")
    private String name;
-  
+   
    @NotBlank(message = "Category must be provided.")
    private String category;
-  
-   @Length(min = 4, max = 50, message = "Description must be provided.")
+   
+   @NotBlank(message = "Description must be provided.")
    private String description;
- 
+   
    @NotNull(message = "Price must be provided.")
-   @Range(min = 1, max = 99999, message = "Price must contain between 1 and 5 digits (inclusive).")
+   @Range(min = 0, message = "Price cannot be negative.")
    private Double price;
    
    @NotNull(message = "Stock must be provided.")
    @Range(min = 0, max = 99999, message = "Stock must contain between 1 and 5 digits (inclusive).")
-   private Integer stock;
+   private Double stock;
 
    public Product() {
    }
 
-   public Product(Integer id, String name, String description, String category, Double price, Integer stock) {
+   public Product(Integer id, String name, String description, String category, Double price, Double stock) {
       this.id = id;
       this.name = name;
       this.description = description;
@@ -90,15 +90,14 @@ public class Product implements Comparable<Product> {
       this.price = price;
    }
 
-   public Integer getStock() {
+   public Double getStock() {
       return stock;
    }
 
-   public void setStock(Integer stock) {
+   public void setStock(Double stock) {
       this.stock = stock;
    }
 
-   
    @Override
    public int hashCode() {
       int hash = 7;

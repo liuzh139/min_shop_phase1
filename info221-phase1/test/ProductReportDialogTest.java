@@ -7,7 +7,6 @@ import dao.ProductDAO;
 import domain.Product;
 import gui.ProductReportDialog;
 import gui.helpers.SimpleListModel;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 import static org.fest.swing.core.matcher.DialogMatcher.withTitle;
@@ -40,8 +39,8 @@ public class ProductReportDialogTest {
    @Before
    public void setUp() {
       // create some students for testing with
-      muffin = new Product(11111, "Muffin", "Cupcake", "Snack", 5.00, 10);
-      juice = new Product(22222, "Juice", "Orange", "SoftDrink", 4.00, 20);
+      muffin = new Product(11111, "Muffin", "Cupcake", "Snack", 5.00, 10.00);
+      juice = new Product(22222, "Juice", "Orange", "SoftDrink", 4.00, 20.00);
 // add the products to collection for testing with
       products = new TreeSet<>();
       products.add(muffin);

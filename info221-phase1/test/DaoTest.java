@@ -29,8 +29,8 @@ public class DaoTest {
 
    @Before
    public void setUp() {
-      muffin = new Product(muffinId, "Muffin", "Cupcake", "Snack", 5.00, 10);
-      juice = new Product(juiceId, "Juice", "Orange juice", "SoftDrink", 4.00, 20);
+      muffin = new Product(muffinId, "Muffin", "Cupcake", "Snack", 5.00, 10.00);
+      juice = new Product(juiceId, "Juice", "Orange juice", "SoftDrink", 4.00, 20.00);
       dao.save(muffin);
       dao.save(juice);
    }
@@ -44,7 +44,7 @@ public class DaoTest {
    @Test
    public void testDaoSaveAndDelete() {
 // create product for testing
-      Product candybar = new Product(33333, "CandyBar", "Strawberry", "Snack", 2.00, 10);
+      Product candybar = new Product(33333, "CandyBar", "Strawberry", "Snack", 2.00, 10.00);
 // save the product using DAO
       dao.save(candybar);
 // retreive the same product via DAO

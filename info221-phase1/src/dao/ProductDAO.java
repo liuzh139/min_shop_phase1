@@ -23,10 +23,5 @@ public interface ProductDAO {
 
    Collection<Product> getAll();
 
-   /**
-    *
-    * @param category
-    * @return
-    */
    Collection<Product> getByCategory(String category);
 }

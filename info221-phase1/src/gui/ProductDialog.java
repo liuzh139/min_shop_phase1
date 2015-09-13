@@ -55,7 +55,6 @@ public class ProductDialog extends javax.swing.JDialog {
 
       // install the factory in the text field
       txtId.setFormatterFactory(factory);
-      txtStock.setFormatterFactory(factory);
 
 
       // define the input format
@@ -71,6 +70,7 @@ public class ProductDialog extends javax.swing.JDialog {
 
       // install the facDouble in the text field
       txtPrice.setFormatterFactory(facDouble);
+      txtStock.setFormatterFactory(facDouble);
 
    }
 
@@ -276,7 +276,7 @@ public class ProductDialog extends javax.swing.JDialog {
          product.setDescription(txtDescription.getText());
          product.setCategory((String) cmbCategory.getSelectedItem());
          product.setPrice((Double) txtPrice.getValue());
-         product.setStock((Integer) txtStock.getValue());
+         product.setStock((Double) txtStock.getValue());
 
          // create the validator factory
          ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

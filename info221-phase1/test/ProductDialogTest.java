@@ -49,7 +49,7 @@ public class ProductDialogTest {
    @Test
    public void testEdit() {
 // a student to edit
-      Product candybar = new Product(33333, "CandyBar", "Strawberry", "Snack", 2.00, 10);
+      Product candybar = new Product(33333, "CandyBar", "Strawberry", "Snack", 2.00, 10.00);
 // create dialog passing in student and mocked DAO
       ProductDialog dialog = new ProductDialog(null, true, candybar, dao);
 // use FEST to control the dialog
@@ -63,7 +63,7 @@ public class ProductDialogTest {
       fest.comboBox("cmbCategory").requireSelection("Snack");
       fest.textBox("txtDescription").requireText("Strawberry");
       fest.textBox("txtPrice").requireText("2.00");
-      fest.textBox("txtStock").requireText("10");
+      fest.textBox("txtStock").requireText("10.00");
 
 // edit the name and major
       fest.textBox("txtName").selectAll().enterText("Bar");
@@ -101,7 +101,7 @@ public class ProductDialogTest {
       fest.comboBox("cmbCategory").selectItem("Snack");
       fest.textBox("txtDescription").selectAll().enterText("Strawberry");
       fest.textBox("txtPrice").selectAll().enterText("2.00");
-      fest.textBox("txtStock").selectAll().enterText("10");
+      fest.textBox("txtStock").selectAll().enterText("10.00");
 // TODO: click the save button
       fest.button("btnSave").click();
 // create a Mockito argument captor to use to retrieve the passed student from the mocked DAO
@@ -116,6 +116,6 @@ public class ProductDialogTest {
       assertEquals("Ensure the Category changed", "Snack",retrieve.getCategory());
       assertEquals("Ensure the Description changed", "Strawberry", retrieve.getDescription());
       assertEquals("Ensure the Price changed", "2.0", String.valueOf(retrieve.getPrice()));
-      assertEquals("Ensure the Stock changed", "10", String.valueOf(retrieve.getStock()));
+      assertEquals("Ensure the Stock changed", "10.0", String.valueOf(retrieve.getStock()));
    }
 }

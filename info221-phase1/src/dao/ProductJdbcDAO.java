@@ -32,7 +32,7 @@ public class ProductJdbcDAO implements ProductDAO {
          stmt.setString(3, product.getDescription());
          stmt.setString(4, product.getCategory());
          stmt.setDouble(5, product.getPrice());
-         stmt.setInt(6, product.getStock());
+         stmt.setDouble(6, product.getStock());
 // execute the statement
          stmt.executeUpdate();
       } catch (SQLException ex) {
@@ -79,8 +79,8 @@ public class ProductJdbcDAO implements ProductDAO {
             String name = rs.getString("name");
             String description = rs.getString("description");
             String category = rs.getString("category");
-            double price = rs.getDouble("price");
-            int stock = rs.getInt("stock");
+            Double price = rs.getDouble("price");
+            Double stock = rs.getDouble("stock");
 
 // use the data to create a student object
             p = new Product(id, name, description, category, price, stock);
@@ -139,8 +139,9 @@ public class ProductJdbcDAO implements ProductDAO {
             String name = rs.getString("name");
             String description = rs.getString("description");
             String category = rs.getString("category");
-            double price = rs.getDouble("price");
-            int stock = rs.getInt("stock");
+            Double price = rs.getDouble("price");
+            Double stock = rs.getDouble("stock");
+
 // use the data to create a student object
             Product p = new Product(id, name, description, category, price, stock);
 // and put it in the collection
@@ -161,7 +162,7 @@ public class ProductJdbcDAO implements ProductDAO {
          // create the SQL statement
          PreparedStatement stmt =
                  connection.prepareStatement("select * from products where category = ?");
-         // copy the data from the student domain object into the statement
+         // copy the data from the product domain object into the statement
          stmt.setString(1, category);
          // execute the query
          ResultSet rs = stmt.executeQuery();
@@ -173,10 +174,10 @@ public class ProductJdbcDAO implements ProductDAO {
             Integer id = rs.getInt("id");
             String name = rs.getString("name");
             String description = rs.getString("description");
-            double price = rs.getDouble("price");
-            int stock = rs.getInt("stock");
+            Double price = rs.getDouble("price");
+            Double stock = rs.getDouble("stock");
 
-// use the data to create a student object
+// use the data to create a product object
             Product p = new Product(id, name, description, category, price, stock);
             getByCategory.add(p);
          }
